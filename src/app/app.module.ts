@@ -11,8 +11,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { AdminAddProductComponent } from './admin-add-product/admin-add-product.component';
 import { AddDimensionComponent } from './add-dimensions/add-dimensions.component';
 import { ReportComponent } from './report/report.component';
-import { NgSelectModule } from '@ng-select/ng-select';
 
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
     AdminAddProductComponent,
     AddDimensionComponent,
     ReportComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -31,7 +30,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
     HttpClientModule,
     AppRoutingModule,
     NgSelectModule
-
   ],
   providers: [],
   bootstrap: [AppComponent]
