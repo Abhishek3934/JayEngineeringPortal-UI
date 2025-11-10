@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jay Engineering Portal – Login</title>
+
+  <!-- Inter font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <style>
+    :root{
+      /* Violet + Blue-Teal hybrid (MB4 + violet touch) */
+      --violet: #7c4dff;
+      --accent-a: #008cff;
+      --accent-b: #00b8d4;
+      --accent-gradient: linear-gradient(90deg, var(--violet) 0%, var(--accent-a) 50%, var(--accent-b) 100%);
+
+      --surface: #ffffff;
+      --muted: #4b6576;
+      --card-bg: rgba(255,255,255,0.90);
+      --glass-border: rgba(8,30,50,0.04);
+      --shadow: 0 14px 40px rgba(8,30,50,0.09);
+      --radius: 14px;
+      --max-width: 420px;
+      --focus-glow: 0 10px 30px rgba(124,77,255,0.12);
+    }
+
+    html,body {
+  height: 100%;
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,#fbfdff 0%, #f3f8fb 60%);
+  color:#033349;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+
+  display: flex;              /* ✅ Added */
+  flex-direction: column;     /* ✅ Added */
+  min-height: 100vh;          /* ✅ Added */
+}
+
+
+    /* page wrapper with subtle violet/blue shapes */
+    .page-bg {
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      padding:28px;
+      overflow:hidden;
+      flex: 1;
+    }
+    .shape {
+      position:absolute;
+      border-radius:48% 52% 60% 40% / 40% 60% 50% 50%;
+      filter: blur(46px);
+      opacity: .12;
+      transform: rotate(10deg);
+    }
+    .shape.one {
+      width:560px;
+      height:560px;
+      background: radial-gradient(circle at 20% 20%, rgba(124,77,255,0.95), transparent 34%), linear-gradient(180deg, rgba(0,140,255,0.85), transparent 60%);
+      right:-140px;
+      top:-120px;
+    }
+    .shape.two{
+      width:360px;
+      height:360px;
+      background: linear-gradient(180deg, rgba(0,184,212,0.8), rgba(124,77,255,0.45));
+      left:-120px;
+      bottom:-100px;
+    }
+
+    .container {
+      width:100%;
+      max-width:1040px;
+      display:flex;
+      gap:36px;
+      align-items:center;
+      justify-content:center;
+      z-index:2;
+      flex-wrap:wrap;
+    }
+
+    /* minimal brand column (small, non-intrusive) */
+    .brand {
+      flex:1 1 420px;
+      min-width:260px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      padding:8px 12px;
+    }
+    .brand .logo {
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .brand .mark {
+      width:50px;
+      height:50px;
+      border-radius:10px;
+      background: var(--accent-gradient);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:rgb(244, 57, 201);
+      font-weight:700;
+      font-size:18px;
+      box-shadow: 0 8px 20px rgba(124,77,255,0.12);
+    }
+    .brand h1 {
+      margin:0;
+      font-size:1.35rem;
+      color:#062731;
+      font-weight:700;
+    }
+    /* keep brand text minimal (one line) */
+    .brand p {
+      margin:0;
+      color:var(--muted);
+      font-size:0.95rem;
+      max-width:36ch;
+    }
+
+    /* streamlined glass card */
+    .glass-card {
+      width:100%;
+      max-width:var(--max-width);
+      background: var(--card-bg);
+      border-radius:var(--radius);
+      padding:22px 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(6px) saturate(120%);
+      -webkit-backdrop-filter: blur(6px) saturate(120%);
+      z-index:3;
+    }
+
+    .title-row {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:10px;
+    }
+    .title {
+      font-size:1.05rem;
+      margin:0;
+      color:#032731;
+      font-weight:700;
+    }
+
+    /* refined input groups */
+    .input-group-modern {
+      position:relative;
+      margin:14px 0;
+    }
+    .input-group-modern input{
+      width:100%;
+      padding:14px 44px 12px 12px;
+      border-radius:10px;
+      border:1px solid rgba(6,35,41,0.06);
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,251,252,0.98));
+      outline:none;
+      color:#062731;
+      font-size:15px;
+      transition: box-shadow .16s ease, border-color .16s ease;
+      -webkit-appearance:none;
+    }
+    .input-group-modern input:focus{
+      border-color: rgba(124,77,255,0.9);
+      box-shadow: var(--focus-glow);
+    }
+
+    /* floating label (minimal) */
+    .input-group-modern label{
+      position:absolute;
+      left:12px;
+      top:12px;
+      font-size:13px;
+      color:#7b98a3;
+      pointer-events:none;
+      transition: transform .14s ease, top .14s ease, font-size .14s ease, color .14s ease;
+      padding:0 6px;
+      background: transparent;
+    }
+    .input-group-modern input:focus ~ label,
+    .input-group-modern input:not(:placeholder-shown) ~ label,
+    .input-group-modern input:valid ~ label {
+      top:-8px;
+      left:10px;
+      font-size:12px;
+      color: var(--violet);
+    }
+
+    .input-group-modern .icon {
+      position:absolute;
+      right:12px;
+      top:50%;
+      transform:translateY(-50%);
+      font-size:18px;
+      color: var(--violet);
+      opacity:0.95;
+    }
+
+    /* Redesigned login button (prominent, pill, violet-blue gradient) */
+    .btn-modern {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      padding:13px 16px;
+      border-radius:999px; /* pill */
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+      font-size:1rem;
+      color:white;
+      background: var(--accent-gradient);
+      box-shadow: 0 10px 30px rgba(124,77,255,0.14), inset 0 -6px 18px rgba(0,0,0,0.04);
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+    }
+    .btn-modern svg { margin-right:8px; opacity:0.95; }
+
+    .btn-modern:hover{
+      transform: translateY(-3px);
+      box-shadow: 0 16px 36px rgba(124,77,255,0.18);
+      filter:brightness(1.03);
+    }
+
+    .forgot-wrapper {
+      margin-top:12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      font-size:0.9rem;
+    }
+    .forgot-btn {
+      background:none;
+      border:none;
+      color:var(--violet);
+      font-weight:600;
+      padding:6px;
+      cursor:pointer;
+    }
+    .remember {
+      color:var(--muted);
+      font-size:0.9rem;
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+
+    /* keep message lightweight */
+    .message {
+      margin-bottom:12px;
+      font-size:0.95rem;
+      color:#033349;
+      padding:8px 10px;
+      border-radius:8px;
+      background: rgba(124,77,255,0.06);
+      border: 1px solid rgba(124,77,255,0.06);
+    }
+
+    footer.footer-modern {
+  text-align:center;
+  color:#577d8a;
+  font-size:0.85rem;
+  padding:10px 0;
+  margin-top: 15px;
+  padding-top: 15px;        /* ✅ Pushes footer to bottom */
+  background: rgba(255,255,255,0.7);
+  border-top: 1px solid rgba(120,0,255,0.25);
+  backdrop-filter: blur(10px);
+}
+
+
+    /* Responsive */
+    @media (max-width:920px){
+      .container { padding:12px; gap:18px; }
+      .brand { order:2; text-align:center; align-items:center; }
+      .glass-card { order:1; }
+    }
+    @media (max-width:520px){
+      .brand { display:none; }
+      .page-bg { padding:14px; }
+    }
+
+    /* Violet-focused premium login button */
+.btn-violet {
+  background: linear-gradient(90deg, #7c4dff 0%, #8f5aff 50%, #a270ff 100%);
+  box-shadow: 0 10px 28px rgba(124, 77, 255, 0.28), inset 0 -5px 14px rgba(0, 0, 0, 0.08);
+  color: #ffffff;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 0.4px;
+  border-radius: 999px;
+  width: 100%;
+  padding: 13px 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+}
+
+.btn-violet i {
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.btn-violet:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px rgba(124, 77, 255, 0.36);
+  filter: brightness(1.05);
+}
+
+.brand {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.mark {
+  background: rgba(252, 37, 223, 0.75); /* Reduce white so violet pops more */
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: #6b2bff; /* Stronger violet for visibility */
+  border: 2px solid #7c4dff;
+  box-shadow: 0 6px 18px rgba(124, 77, 255, 0.32);
+  backdrop-filter: blur(8px);
+}
+
+
+.brand-name {
+  font-weight: 700;
+  font-size: 1rem;
+  background: linear-gradient(90deg, #7c4dff, #b07bff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-title {
+  font-size: 1.7rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #7c4dff, #b07bff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-top: 4px;
+}
+
+
+  </style>
+</head>
+<body>
+  <div class="page-bg">
+    <div class="shape one" aria-hidden="true"></div>
+    <div class="shape two" aria-hidden="true"></div>
+
+    <div class="container">
+      <!-- minimal brand column -->
+      <div class="brand">
+        <div class="logo">
+          <div class="mark">JT</div>
+          <div class="brand-name">Jay Engineering</div>
+        </div>
+        <h1 class="brand-title">Sign In</h1>
+      </div>
+
+
+      <!-- streamlined login card -->
+      <div class="glass-card" role="region" aria-label="Login form">
+        <!-- <div class="title-row">
+          <div style="width:44px;height:44px;border-radius:10px;background:var(--accent-gradient);display:flex;align-items:center;justify-content:center;color:white;font-weight:700">JT</div>
+
+        </div> -->
+
+        <!-- message (kept) -->
+        <div class="message" *ngIf="message" [ngClass]="messageClass">{{ message }}</div>
+
+        <form (ngSubmit)="login()" novalidate>
+          <div class="input-group-modern">
+            <input
+              type="text"
+              [(ngModel)]="username"
+              name="username"
+              required
+              autocomplete="username"
+              placeholder=" "
+              aria-label="Username" />
+            <label>Username</label>
+            <i class="bi bi-person icon" aria-hidden="true"></i>
+          </div>
+
+          <div class="input-group-modern">
+            <input
+              type="password"
+              [(ngModel)]="password"
+              name="password"
+              required
+              autocomplete="current-password"
+              placeholder=" "
+              aria-label="Password" />
+            <label>Password</label>
+            <i class="bi bi-lock icon" aria-hidden="true"></i>
+          </div>
+
+          <!-- improved pill-shaped violet button -->
+<button class="btn-modern btn-violet" type="submit" aria-label="Login">
+  <i class="bi bi-shield-lock-fill" aria-hidden="true"></i>
+  LOGIN
+</button>
+
+
+          <div class="forgot-wrapper" style="margin-top:14px;">
+            <div class="remember">
+              <input id="remember" type="checkbox" style="width:16px;height:16px;border-radius:4px;border:1px solid rgba(6,35,41,0.06)"/>
+              <label for="remember" style="color:var(--muted);font-size:0.9rem">Remember</label>
+            </div>
+
+            <div>
+              <button class="forgot-btn" type="button" (click)="forgotPassword()">Forgot?</button>
+            </div>
+          </div>
+        </form>
+
+        <footer class="footer-modern" aria-hidden="true">Mindtap © 2025</footer>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

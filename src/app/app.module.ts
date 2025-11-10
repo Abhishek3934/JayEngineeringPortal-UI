@@ -1,16 +1,37 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './components/login/login.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { AdminAddProductComponent } from './admin-add-product/admin-add-product.component';
+import { AddDimensionComponent } from './add-dimensions/add-dimensions.component';
+import { ReportComponent } from './report/report.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    DashboardComponent,
+    NavbarComponent,
+    AdminAddProductComponent,
+    AddDimensionComponent,
+    ReportComponent,
+
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    FormsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    NgSelectModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

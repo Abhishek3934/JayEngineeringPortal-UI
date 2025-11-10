@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Product Dimension – Jay Engineering Portal</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ng-select/ng-select@8.0.0/themes/default.theme.css" />
+<script src="https://cdn.jsdelivr.net/npm/@ng-select/ng-select@8.0.0/bundles/ng-select.min.js"></script>
+
+
+  <style>
+  :root {
+    --primary: #6a0bff;
+    --primary-light: #8f4dff;
+    --bg1: #efe4ff;
+    --bg2: #d9c8ff;
+    --card-bg: #ffffffee;
+    --border: rgba(106, 11, 255, 0.65);
+    --text-dark: #1c003d;
+    --label: #3b2d55;
+    --radius: 14px;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    width: 100%;
+    font-family: "Inter", system-ui, sans-serif;
+    background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* HEADER */
+  .header {
+    width: 100%;
+    padding: 14px 24px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(106, 11, 255, 0.25);
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 20px;
+  }
+
+  .content-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 10px;
+  }
+
+  .glass-card {
+    width: 460px;
+    padding: 34px 32px;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 26px rgba(106, 11, 255, 0.18);
+    animation: fadeIn 0.4s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h2 {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.4rem;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: var(--label);
+    margin-top: 0;
+    margin-bottom: 22px;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+
+  .form-group label {
+    font-size: 14px;
+    color: var(--label);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* INPUTS */
+  .form-control {
+    width: 100%;
+    padding: 11px 13px;
+    border-radius: 10px;
+    border: 1.7px solid black;
+    background: #ffffff;
+    color: var(--text-dark);
+    font-size: 15px;
+    outline: none;
+    transition: 0.25s;
+  }
+
+  .form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(106, 11, 255, 0.28);
+  }
+
+  /* NG-SELECT */
+  ng-select {
+    width: 100%;
+    font-size: 15px;
+  }
+
+  .ng-select .ng-select-container {
+    background: #faf5ff !important;
+    border: 1.7px solid var(--border) !important;
+    border-radius: 10px !important;
+    min-height: 44px;
+    color: var(--text-dark);
+    transition: 0.25s;
+  }
+
+  .ng-select.ng-select-focused .ng-select-container {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(106, 11, 255, 0.28);
+    background: #fff !important;
+  }
+
+  .ng-dropdown-panel {
+    border: 1px solid var(--primary);
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(106, 11, 255, 0.28);
+    max-height: 220px;
+    overflow-y: auto;
+  }
+
+  .ng-dropdown-panel .ng-option {
+    background: #fff;
+    color: var(--text-dark);
+    font-weight: 500;
+    padding: 10px 12px;
+  }
+
+  .ng-dropdown-panel .ng-option:hover {
+    background: #f0e3ff;
+    color: var(--primary);
+  }
+
+  .ng-dropdown-panel .ng-option-selected {
+    background: #e1d4ff;
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  /* BUTTONS – A1: Purple Border Always Visible */
+  .btn-primary, .btn-back {
+    width: 100%;
+    padding: 12px;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: 0.25s;
+    margin-top: 14px;
+    border: 1.7px solid var(--primary); /* ✅ Purple border always visible */
+  }
+
+  .btn-primary {
+    background: var(--primary);
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: var(--primary-light);
+    box-shadow: 0 8px 20px rgba(106, 11, 255, 0.28);
+    transform: translateY(-2px);
+  }
+
+  .btn-back {
+    background: #fff;
+    color: black;
+    border-color: black;
+  }
+
+  .btn-back:hover {
+    background: #f2e8ff;
+    box-shadow: 0 0 10px rgba(106, 11, 255, 0.28);
+    transform: translateY(-2px);
+  }
+
+  footer {
+    text-align: center;
+    padding: 10px;
+    background: rgba(255,255,255,0.85);
+    color: #5c5180;
+    font-size: 13px;
+    border-top: 1px solid rgba(106, 11, 255, 0.25);
+    backdrop-filter: blur(6px);
+    margin-top: auto;
+  }
+</style>
+
+</head>
+
+<body>
+  <div class="header">Add Product Dimension</div>
+
+  <div class="content-wrapper">
+    <div class="glass-card">
+
+      <h2>Add Product Dimension</h2>
+
+      <form (ngSubmit)="saveDimension()">
+
+        <div class="form-group">
+          <label>Product ID</label>
+          <input type="number" class="form-control" [(ngModel)]="dimension.productId" name="productId" readonly>
+        </div>
+
+        <div class="form-group">
+          <label>Sr No</label>
+          <input type="number" class="form-control" [(ngModel)]="dimension.srNo" name="srNo" required>
+        </div>
+
+        <div class="form-group">
+          <label>Dimension Type</label>
+          <ng-select
+            [searchable]="true"
+            [clearable]="true"
+            placeholder="Select Dimension Type"
+            [(ngModel)]="dimension.dimensionType"
+            name="dimensionType">
+
+            <ng-option value="Dimension">Dimension</ng-option>
+            <ng-option value="Slot">Slot</ng-option>
+            <ng-option value="Counter Dimension">Counter Dimension</ng-option>
+            <ng-option value="Hole">Hole</ng-option>
+            <ng-option value="CD">CD</ng-option>
+            <ng-option value="Length">Length</ng-option>
+
+          </ng-select>
+        </div>
+
+        <div class="form-group">
+          <label>Specified Dimension</label>
+          <input type="text" class="form-control" [(ngModel)]="dimension.specifiedDimension" name="specifiedDimension">
+        </div>
+
+        <div class="form-group">
+          <label>Tolerance</label>
+          <input type="text" class="form-control" [(ngModel)]="dimension.tolerance" name="tolerance">
+        </div>
+
+        <button class="btn-primary" type="submit">Save Dimension</button>
+        <button type="button" class="btn-back" routerLink="/dashboard">← Back to Dashboard</button>
+
+      </form>
+    </div>
+  </div>
+
+  <footer>Jay Engineering © 2025</footer>
+
+</body>
+</html>
