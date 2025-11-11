@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080'  // Make sure this is correct
+  apiUrl: 'https://app-5431ca0d-ad85-45fb-86e3-1018062b316c.cleverapps.io'  // Make sure this is correct
 };
