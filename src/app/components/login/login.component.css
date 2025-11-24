@@ -1,0 +1,62 @@
+.powered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #6b2bff;
+}
+
+.powered-logo {
+  width: 22px;
+  height: 22px;
+}
+
+.copy {
+  font-size: 0.8rem;
+  color: #577d8a;
+}
+
+.top-bar {
+  width: 100%;
+  padding: 10px 20px;
+  background: #ffffff;     /* MG white background */
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: #033349;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+}
+
+.left-info {
+  display: flex;
+  gap: 6px;
+}
+
+.right-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.right-info i {
+  font-size: 18px;
+  color: #7c4dff; /* violet accent */
+}
+
+#date-picker {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.15);
+  font-size: 14px;
+  outline: none;
+}
+

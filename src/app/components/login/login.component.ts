@@ -52,4 +52,44 @@ export class LoginComponent {
       }
     });
   }
+
+  ngOnInit() {
+    this.showTodayDate();
+  }
+
+  showTodayDate() {
+    const now = new Date();
+
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    };
+
+    const formatted = now.toLocaleString("en-IN", options);
+
+    (document.getElementById('todayDate') as HTMLElement).innerText = formatted;
+  }
+
+
+  togglePasswordVisibility() {
+    const passwordField = document.getElementById('password-field') as HTMLInputElement;
+    const toggleIcon = document.getElementById('togglePassword');
+
+    if (passwordField.type === 'password') {
+      passwordField.type = 'text';
+      toggleIcon?.classList.remove('bi-eye-slash');
+      toggleIcon?.classList.add('bi-eye');
+    } else {
+      passwordField.type = 'password';
+      toggleIcon?.classList.remove('bi-eye');
+      toggleIcon?.classList.add('bi-eye-slash');
+    }
+  }
+
+
 }

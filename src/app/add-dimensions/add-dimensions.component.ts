@@ -10,6 +10,9 @@ import { ProductDimension } from '../models/product-dimension.model';
 })
 export class AddDimensionComponent implements OnInit {
 
+
+
+
   dimension: ProductDimension = {
     productId: 0,
     srNo: 0,

@@ -37,19 +37,17 @@ export class AdminAddProductComponent {
   addProduct() {
     this.productService.addProduct(this.product).subscribe({
       next: (res: any) => {
+        // res should have { productId, product, message }
         if (res && res.productId) {
           this.successMsg = '✅ Product added successfully!';
           this.errorMsg = '';
 
-          // Show alert for user confirmation
           alert('✅ Product added! Now add dimensions.');
 
-          // Delay navigation slightly to ensure it works on mobile browsers too
-          setTimeout(() => {
-            this.router.navigate(['/add-dimensions'], {
-              queryParams: { productId: res.productId }
-            });
-          }, 300);
+          // Redirect to Add Dimension page with productId
+          this.router.navigate(['/add-dimensions'], {
+            queryParams: { productId: res.productId }
+          });
 
           // Reset form
           this.product = {
@@ -63,10 +61,12 @@ export class AdminAddProductComponent {
           };
         } else {
           this.errorMsg = '❌ Failed to get product ID';
+          this.successMsg = '';
         }
       },
       error: (err) => {
         this.errorMsg = '❌ Failed to add product';
+        this.successMsg = '';
         console.error(err);
       }
     });

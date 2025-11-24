@@ -284,12 +284,9 @@
 
     /* Responsive */
     @media (max-width:920px){
-      .container { padding:12px; gap:18px; }
-      .brand { order:2; text-align:center; align-items:center; }
       .glass-card { order:1; }
     }
     @media (max-width:520px){
-      .brand { display:none; }
       .page-bg { padding:14px; }
     }
 
@@ -372,9 +369,87 @@
 }
 
 
+.powered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #6b2bff;
+}
+
+.powered-logo {
+  width: 22px;
+  height: 22px;
+}
+
+.copy {
+  font-size: 0.8rem;
+  color: #577d8a;
+}
+
+.top-bar {
+  width: 100%;
+  padding: 10px 20px;
+  background: #ffffff00;     /* MG white background */
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: #033349;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+}
+
+.left-info {
+  display: flex;
+  gap: 6px;
+}
+
+.right-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.right-info i {
+  font-size: 18px;
+  color: #7c4dff; /* violet accent */
+}
+
+#date-picker {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.15);
+  font-size: 14px;
+  outline: none;
+}
+
+
+
+
   </style>
 </head>
 <body>
+  <div class="top-bar">
+    <!-- <div class="left-info">
+      <span id="day-name"></span>,
+      <span id="full-date"></span> —
+      <span id="live-time"></span>
+    </div> -->
+
+
+    <div class="right-info" style="padding-left: 40%;">
+      <div id="todayDate" style="font-size:0.9rem;color:#000000;"></div>
+    </div>
+  </div>
+
   <div class="page-bg">
     <div class="shape one" aria-hidden="true"></div>
     <div class="shape two" aria-hidden="true"></div>
@@ -422,10 +497,14 @@
               required
               autocomplete="current-password"
               placeholder=" "
-              aria-label="Password" />
+              aria-label="Password"
+              id="password-field" />
+
             <label>Password</label>
-            <i class="bi bi-lock icon" aria-hidden="true"></i>
+
+            <i class="bi bi-eye-slash icon" id="togglePassword" style="cursor:pointer;" (click)="togglePasswordVisibility()"></i>
           </div>
+
 
           <!-- improved pill-shaped violet button -->
 <button class="btn-modern btn-violet" type="submit" aria-label="Login">
@@ -446,9 +525,35 @@
           </div>
         </form>
 
-        <footer class="footer-modern" aria-hidden="true">Mindtap © 2025</footer>
+        <footer class="footer-modern">
+          <div class="powered">
+            <img src="" alt="logo" class="powered-logo">
+            <span>MindTap Solutions – Powered By</span>
+          </div>
+          <div class="copy">© 2025 MindTap Solutions. All Rights Reserved.</div>
+        </footer>
+
       </div>
     </div>
   </div>
+
+  <script>
+    function updateDateBar() {
+      const now = new Date();
+
+      const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+      const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+      document.getElementById("day-name").innerHTML = days[now.getDay()];
+      document.getElementById("full-date").innerHTML =
+        now.getDate() + " " + months[now.getMonth()] + " " + now.getFullYear();
+
+      // Set mini calendar default value
+      document.getElementById("date-picker").value = now.toISOString().split("T")[0];
+    }
+
+    updateDateBar();
+  </script>
+
 </body>
 </html>

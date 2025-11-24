@@ -23,8 +23,7 @@
       color: #2a005e;
       overflow-x: hidden;
       display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+      flex-direction: column;
     }
 
     @keyframes gradientShift {
@@ -33,7 +32,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Glass Top Bar */
+    /* TOP BAR */
     .top-bar {
       padding: 14px 24px;
       background: rgba(255,255,255,0.65);
@@ -45,11 +44,26 @@
       box-shadow: 0 2px 10px rgba(130, 0, 255, 0.15);
     }
 
-    .top-bar h3 {
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .top-bar-left img {
+      height: 38px;
+      width: auto;
+    }
+
+    .top-bar-left h3 {
       margin: 0;
       font-weight: 600;
       font-size: 1.28rem;
       color: #5b03c9;
+    }
+
+    .top-bar-left small {
+      color: #7f29ff;
     }
 
     .logout-btn {
@@ -211,15 +225,23 @@
     }
 
     .footer-modern {
-  text-align: center;
-  padding: 12px;
-  background: rgba(255,255,255,0.7);
-  color: #4b0089;
-  font-size: 13px;
-  border-top: 1px solid rgba(120,0,255,0.25);
-  backdrop-filter: blur(10px);
-  margin-top: auto;    /* <— Important change */
-}
+      text-align: center;
+      padding: 12px;
+      background: rgba(255,255,255,0.7);
+      color: #4b0089;
+      font-size: 13px;
+      border-top: 1px solid rgba(120,0,255,0.25);
+      backdrop-filter: blur(10px);
+      margin-top: auto;
+    }
+
+    .footer-modern .powered {
+      display: block;
+      font-size: 11px;
+      color: #7f29ff;
+      margin-top: 3px;
+    }
+
   </style>
 </head>
 
@@ -227,9 +249,13 @@
 
   <!-- TOP BAR -->
   <div class="top-bar">
-    <div>
-      <h3>Welcome, {{ auth.getUsername() }}</h3>
-      <small style="color:#7f29ff">Role: {{ auth.getRole() }}</small>
+    <div class="top-bar-left">
+      <!-- Replace src with your logo path -->
+      <img src="https://via.placeholder.com/120x38?text=Jay+Engineering" alt="Jay Engineering Industries Logo">
+      <div>
+        <h3>Jay Engineering Industries</h3>
+        <small>Welcome, {{ auth.getUsername() }}</small>
+      </div>
     </div>
     <button class="logout-btn" (click)="logout()">Logout</button>
   </div>
@@ -306,6 +332,7 @@
 
   <footer class="footer-modern">
     Jay Engineering © 2025
+    <span class="powered">Powered by Mindtap Solutions</span>
   </footer>
 
 </body>
