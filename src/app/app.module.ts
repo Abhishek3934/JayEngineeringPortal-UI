@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +13,7 @@ import { AddDimensionComponent } from './add-dimensions/add-dimensions.component
 import { ReportComponent } from './report/report.component';
 
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AddUserComponent } from './add-user/add-user.component';
 
 @NgModule({
   declarations: [
@@ -23,13 +24,15 @@ import { NgSelectModule } from '@ng-select/ng-select';
     AdminAddProductComponent,
     AddDimensionComponent,
     ReportComponent,
+    AddUserComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    NgSelectModule
+    NgSelectModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

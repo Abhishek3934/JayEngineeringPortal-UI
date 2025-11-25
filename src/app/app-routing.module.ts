@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'admin/add-product', component: AdminAddProductComponent },
   { path: 'add-dimensions', component: AddDimensionComponent },
+  {path: 'manage-users', redirectTo: 'manage-users', pathMatch: 'full'}
 
   // add more routes later
 ];
