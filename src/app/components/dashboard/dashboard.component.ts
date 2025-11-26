@@ -12,6 +12,7 @@ export class DashboardComponent {
   searchText = '';
   productFound: any = null;
   errorMsg = '';
+recentProducts: any;
 
   constructor(
     public auth: AuthService,
@@ -53,6 +54,7 @@ export class DashboardComponent {
       this.downloadFile(blob, `report_${this.productFound.drawingNo}.pdf`);
     });
   }
+
 
 
 
