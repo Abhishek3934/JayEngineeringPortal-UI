@@ -27,37 +27,49 @@ export class AddDimensionComponent implements OnInit {
     private router: Router
   ) {}
 
+  // ngOnInit(): void {
+  //   // Get productId from query params
+  //   this.route.queryParams.subscribe(params => {
+  //     this.dimension.productId = params['productId'] || 0;
+  //     console.log("Product ID received:", this.dimension.productId);
+  //   });
+  // }
+
   ngOnInit(): void {
-    // Get productId from query params
     this.route.queryParams.subscribe(params => {
-      this.dimension.productId = params['productId'] || 0;
+      this.dimension.productId = Number(params['productId']) || 0;
       console.log("Product ID received:", this.dimension.productId);
     });
   }
 
+
   saveDimension() {
-    // ✅ Front-end validation: only srNo and dimensionType are required
-    if (!this.dimension.srNo || !this.dimension.dimensionType.trim()) {
-      alert("⚠️ Please fill Sr No and Dimension Type before saving.");
-      return; // Stop execution if validation fails
+    if (!this.dimension.dimensionType || this.dimension.dimensionType.trim() === '') {
+      alert("⚠️ Please fill Dimension Type before saving.");
+      return;
     }
 
-    console.log("Sending payload:", this.dimension);
+    const payload = {
+      product_id: this.dimension.productId,
+      sr_no: this.dimension.srNo,
+      dimension_type: this.dimension.dimensionType, // <-- already a string
+      specified_dimension: this.dimension.specifiedDimension,
+      tolerance: this.dimension.tolerance
+    };
 
-    this.service.saveDimension(this.dimension).subscribe({
+    console.log("Sending payload:", payload);
+
+    this.service.saveDimension(payload).subscribe({
       next: (res: any) => {
-        // ✅ Ask user if they want to add more dimensions
         const addMore = confirm("✅ Dimension saved!\nDo you want to add another dimension?");
-
         if (addMore) {
-          // Clear only dimension fields, keep productId
           this.dimension.srNo = 0;
-          this.dimension.dimensionType = '';
+          this.dimension.dimensionType = ''; // reset selection
           this.dimension.specifiedDimension = '';
           this.dimension.tolerance = '';
         } else {
           alert("✅ All dimensions added!");
-          this.router.navigate(['/products']); // Redirect back to product list/dashboard
+          this.router.navigate(['/products']);
         }
       },
       error: (err: any) => {
@@ -67,4 +79,13 @@ export class AddDimensionComponent implements OnInit {
     });
   }
 
+  // Ensure custom entered tags are stored as strings
+addCustomDimension = (name: string) => {
+  return name; // returns the string itself
+};
+
+
+
 }
+
+

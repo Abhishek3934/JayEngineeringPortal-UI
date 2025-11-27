@@ -254,29 +254,34 @@ footer {
 
 
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label>Sr No</label>
           <input type="number" class="form-control" [(ngModel)]="dimension.srNo" name="srNo" required>
-        </div>
+        </div> -->
 
         <div class="form-group">
           <label>Dimension Type</label>
           <ng-select
             [searchable]="true"
             [clearable]="true"
+            [addTag]="true"
+            [addTag]="addCustomDimension"
             placeholder="Select Dimension Type"
             [(ngModel)]="dimension.dimensionType"
             name="dimensionType">
 
-            <ng-option value="Dimension">Dimension</ng-option>
-            <ng-option value="Slot">Slot</ng-option>
-            <ng-option value="Counter Dimension">Counter Dimension</ng-option>
-            <ng-option value="Hole">Hole</ng-option>
-            <ng-option value="CD">CD</ng-option>
-            <ng-option value="Length">Length</ng-option>
+            <ng-option [value]="'Dimension'">Dimension</ng-option>
+            <ng-option [value]="'Slot'">Slot</ng-option>
+            <ng-option [value]="'Counter Dimension'">Counter Dimension</ng-option>
+            <ng-option [value]="'Hole'">Hole</ng-option>
+            <ng-option [value]="'CD'">CD</ng-option>
+            <ng-option [value]="'Length'">Length</ng-option>
 
           </ng-select>
         </div>
+
+
+
 
         <div class="form-group">
           <label>Specified Dimension</label>
