@@ -173,9 +173,11 @@
       transition: box-shadow .16s ease, border-color .16s ease;
       -webkit-appearance:none;
     }
+
     .input-group-modern input:focus{
       border-color: #0A2342;
       box-shadow: var(--focus-glow);
+      border: none;
     }
 
     /* floating label (minimal) */
@@ -376,7 +378,7 @@
   margin-bottom: 4px;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #2E8BC0; /* sky blue highlight */
+  color: #0A2342; /* sky blue highlight */
 }
 
 
@@ -391,9 +393,10 @@
 }
 
 .top-bar {
+  background-color: #0A2342;
   width: 100%;
   padding: 10px 20px;
-  background: #ffffff00;     /* MG white background */
+  /* background: #ffffff00;*/
   border-bottom: 1px solid rgba(0,0,0,0.08);
   display: flex;
   justify-content: space-between;
@@ -435,7 +438,11 @@
 
 
   </style>
+
+
 </head>
+
+
 <body>
   <div class="top-bar">
     <!-- <div class="left-info">
@@ -446,7 +453,7 @@
 
 
     <div class="right-info" style="padding-left: 40%;">
-      <div id="todayDate" style="font-size:0.9rem;color:#000000;"></div>
+      <div id="todayDate" style="font-size:0.9rem;color:#F5C518;"></div>
     </div>
   </div>
 
@@ -518,9 +525,17 @@
               <label for="remember" style="color:var(--muted);font-size:0.9rem">Remember</label>
             </div>
 
+            <!-- <div>
+              <button class="forgot-btn" type="button" (click)="forgotPassword()">Sign up</button>
+            </div> -->
+
             <div>
-              <!-- <button class="forgot-btn" type="button" (click)="forgotPassword()">Forgot?</button> -->
+              <button class="forgot-btn" type="button" (click)="forgotPassword()">Forgot Password</button><br>
+              <button class="forgot-btn" type="button" (click)="goToSignup()">Sign up</button>
+
             </div>
+
+
           </div>
         </form>
 
@@ -529,7 +544,7 @@
             <!-- <img src="" alt="logo" class="powered-logo"> -->
             <span>Jay Engineering © 2025</span>
           </div>
-          <div class="copy">© 2025 MindTap Solutions. All Rights Reserved.</div>
+          <div class="copy">Powered by MindTap Solutions</div>
         </footer>
 
 
@@ -538,23 +553,55 @@
     </div>
   </div>
 
-  <script>
-    function updateDateBar() {
-      const now = new Date();
+  <div id="todayDate" style="font-size:0.9rem;color:#0A2342;"></div>
 
-      const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-      const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+<script>
+(function () {
+  const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
-      document.getElementById("day-name").innerHTML = days[now.getDay()];
-      document.getElementById("full-date").innerHTML =
-        now.getDate() + " " + months[now.getMonth()] + " " + now.getFullYear();
+  function pad(n) { return n.toString().padStart(2, '0'); }
 
-      // Set mini calendar default value
-      document.getElementById("date-picker").value = now.toISOString().split("T")[0];
-    }
+  // Updates day and full date
+  function updateDateBar() {
+    const now = new Date();
+    const dayEl = document.getElementById("day-name");
+    const fullDateEl = document.getElementById("full-date");
+    const datePicker = document.getElementById("date-picker");
 
-    updateDateBar();
-  </script>
+    if(dayEl) dayEl.textContent = days[now.getDay()];
+    if(fullDateEl) fullDateEl.textContent = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+    if(datePicker) datePicker.value = now.toISOString().split("T")[0];
+  }
+
+  // Updates time including seconds
+  function updateDateTime() {
+    const now = new Date();
+    let hours = now.getHours();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12; // 12-hour format
+    const minutes = pad(now.getMinutes());
+    const seconds = pad(now.getSeconds());
+    const el = document.getElementById('todayDate');
+    if(el) el.textContent = `${pad(hours)}:${minutes}:${seconds} ${ampm}`;
+  }
+
+  // Initial display
+  updateDateBar();
+  updateDateTime();
+
+  // Keep day/date updated every minute
+  setInterval(updateDateBar, 60 * 1000);
+
+  // Update time every second so seconds tick dynamically
+  setInterval(updateDateTime, 1000);
+})();
+</script>
+
+
+
+
+
 
 </body>
 </html>

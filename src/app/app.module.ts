@@ -14,6 +14,8 @@ import { ReportComponent } from './report/report.component';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AddUserComponent } from './add-user/add-user.component';
+import { SignupComponent } from './signup/signup.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { AddUserComponent } from './add-user/add-user.component';
     AddDimensionComponent,
     ReportComponent,
     AddUserComponent,
+    SignupComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,

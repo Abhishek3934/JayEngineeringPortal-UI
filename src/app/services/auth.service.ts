@@ -16,6 +16,20 @@ export class AuthService {
     return this.http.post(`${this.api}/api/auth/login`, { username, password });
   }
 
+  sendOtp(email: string) {
+    return this.http.post<any>('http://localhost:8080/api/users/forgot-password/send-otp', { email });
+  }
+
+  verifyOtp(email: string, otp: string) {
+    return this.http.post<any>('http://localhost:8080/api/users/forgot-password/verify-otp', { email, otp });
+  }
+
+  resetPassword(email: string, newPassword: string) {
+    return this.http.post<any>('http://localhost:8080/api/users/forgot-password/reset', { email, newPassword });
+  }
+
+
+
 
 
   logout() {

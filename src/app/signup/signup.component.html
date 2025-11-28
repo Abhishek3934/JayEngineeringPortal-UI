@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign Up – Jay Engineering Portal</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      width: 100%;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #F8F9FB, #EAF3F8, #DDEBF2);
+      background-size: 300% 300%;
+      animation: gradientShift 10s ease infinite;
+      color: #2C2C2C;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .page-body {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .glass-card {
+      background: rgba(255,255,255,0.55);
+      padding: 30px 34px 40px;
+      border-radius: 14px;
+      border: 1px solid rgba(10, 35, 66, 0.12);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 6px 30px rgba(10, 35, 66, 0.25);
+      max-width: 600px;
+      width: 100%;
+      transition: 0.3s;
+    }
+
+    .glass-card:hover {
+      box-shadow: 0 6px 35px rgba(10, 35, 66, 0.32);
+      transform: translateY(-2px);
+    }
+
+    .card-h1 {
+      margin-top: 0;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: #0A2342;
+      margin-bottom: 10px;
+    }
+
+    .card-sub {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #2E8BC0;
+      margin-bottom: 22px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      color: #0A2342;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(10, 35, 66, 0.25);
+      background: rgba(255,255,255,0.65);
+      font-size: 15px;
+      outline: none;
+      transition: 0.20s;
+      color: #2C2C2C;
+      backdrop-filter: blur(8px);
+    }
+
+    .form-control:focus {
+      border-color: #2E8BC0;
+      box-shadow: 0 0 8px #2E8BC0;
+      background: rgba(255,255,255,0.75);
+    }
+
+    .btn-row {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      margin-top: 18px;
+    }
+
+    .btn-primary {
+      background: #F5C518;
+      color: #0A2342;
+      border: none;
+      border-radius: 10px;
+      padding: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.25s;
+    }
+
+    .btn-primary:hover {
+      background: #d6a915;
+      box-shadow: 0 0 12px rgba(245, 197, 24, 0.75);
+      transform: translateY(-2px);
+      color: #0A2342;
+    }
+
+    .btn-ghost {
+      padding: 12px;
+      border-radius: 10px;
+      background: #F8F9FB;
+      border: 1px solid #0A2342;
+      font-weight: 600;
+      color: #0A2342;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: 0.25s;
+    }
+
+    .btn-ghost:hover {
+      background: #2E8BC0;
+      color: #ffffff;
+      box-shadow: 0 0 12px rgba(46, 139, 192, 0.75);
+    }
+
+    .footer-modern {
+      text-align: center;
+      padding: 12px;
+      background: rgba(255,255,255,0.7);
+      color: #0A2342;
+      font-size: 13px;
+      border-top: 1px solid rgba(10, 35, 66, 0.25);
+      backdrop-filter: blur(10px);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="page-body">
+    <section class="glass-card">
+      <h1 class="card-h1">Create Your Account</h1>
+
+      <!-- STEP: SIGNUP FORM -->
+      <form *ngIf="step === 'form'" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div class="card-sub">Welcome! Fill the form to continue.</div>
+
+        <div class="form-group">
+          <label>Username</label>
+          <input class="form-control"
+                 type="text"
+                 formControlName="username"
+                 required
+                 (blur)="checkUsername()" />
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input class="form-control"
+                 type="password"
+                 formControlName="password"
+                 required
+                 (keyup)="checkPassword()" />
+        </div>
+
+
+
+        <div class="form-group">
+          <label>Email</label>
+          <input class="form-control"
+          type="email"
+          formControlName="email"
+          [disabled]="signupForm.value.role === 'ADMIN'"
+          required />
+           </div>
+
+        <div class="btn-row">
+          <button class="btn-primary" type="submit" [disabled]="signupForm.invalid">
+            <i class="bi bi-person-plus"></i> Sign Up
+          </button>
+          <button class="btn-ghost" type="button" routerLink="/login">
+            <i class="bi bi-arrow-left"></i> Back to Login
+          </button>
+        </div>
+
+        <p *ngIf="message" style="margin-top:12px;">{{ message }}</p>
+      </form>
+
+
+      <!-- STEP: OTP INPUT -->
+      <div *ngIf="step === 'otp'">
+        <div class="card-sub">
+          We sent a 6-digit verification code to <strong>{{ emailForVerification }}</strong>
+        </div>
+
+        <form [formGroup]="otpForm" (ngSubmit)="verifyOtp()">
+          <div class="form-group">
+            <label>Enter OTP</label>
+            <input class="form-control" type="text" formControlName="otp" maxlength="6" />
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-primary" type="submit" [disabled]="otpForm.invalid">
+              Verify OTP
+            </button>
+            <button class="btn-ghost" type="button" (click)="resendOtp()">
+              Resend OTP
+            </button>
+          </div>
+
+          <p *ngIf="message" style="margin-top:12px;">{{ message }}</p>
+        </form>
+      </div>
+
+      <!-- STEP: DONE -->
+      <div *ngIf="step === 'done'">
+        <p class="card-sub">✅ {{ message }}</p>
+        <div class="btn-row">
+          <button class="btn-primary" routerLink="/login" type="button">
+            Go to Login
+          </button>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="footer-modern">
+    Jay Engineering © 2025 <br>
+    <span class="powered">Powered by Mindtap Solutions</span>
+  </footer>
+
+</body>
+
+</html>

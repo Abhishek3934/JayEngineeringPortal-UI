@@ -7,6 +7,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProductService {
+  deleteProduct(id: number) {
+    return this.http.delete(`${environment.apiUrl}/api/products/delete/${id}`);
+  }
+
+
+
   private apiUrl = environment.apiUrl + '/api/products';
 
   constructor(private http: HttpClient) { }
@@ -29,4 +35,10 @@ export class ProductService {
   searchProduct(drawingNo: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/search?drawingNo=${drawingNo}`);
   }
+
+  getAllProducts(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/all`);
+  }
+
+
 }

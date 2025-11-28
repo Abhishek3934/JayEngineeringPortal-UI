@@ -222,12 +222,12 @@
 .btn-green:hover { background: #00d987; box-shadow: 0 0 10px #00d987; }
 
 /* Primary Button */
-.btn-blue { background: #2E8BC0; }
-.btn-blue:hover { background: #0A2342; box-shadow: 0 0 10px #0A2342; }
+.btn-blue { background: #F5C518; color: #0A2342; }
+.btn-blue:hover { background: #fcc601; box-shadow: 0 0 10px #fcc601; color: #0A2342; }
 
 /* Accent Button */
 .btn-yellow { background: #F5C518; color: #2C2C2C; }
-.btn-yellow:hover { background: #ffdd5e; box-shadow: 0 0 10px #F5C518; }
+.btn-yellow:hover { background: #fdca12; box-shadow: 0 0 10px #F5C518; }
 
 /* ---------------- TABLE ---------------- */
 table {
@@ -317,6 +317,38 @@ tbody tr:hover {
 }
 
 
+@media (max-width: 300px) {
+  .responsive-table thead {
+    display: none; /* Hide header */
+  }
+
+  .responsive-table tr {
+    display: block;
+    margin-bottom: 12px;
+    background: #ffffff20;
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .responsive-table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border: none;
+  }
+
+  .responsive-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    opacity: 0.8;
+  }
+
+  .table-container {
+    overflow-x: hidden; /* No horizontal scroll on mobile */
+  }
+}
+
+
 
   </style>
 </head>
@@ -344,6 +376,11 @@ tbody tr:hover {
 
       <!-- <a class="menu-btn" routerLink="/manage-users"><i class="bi bi-people me-2"></i> Manage Users</a> -->
       <a class="menu-btn" routerLink="/admin/add-product"><i class="bi bi-gear me-2"></i> Add Products</a>
+
+      <button class="menu-btn" style="margin-left:10px; background:#F5C518; color:#0A2342;"
+          (click)="clearSearch()">
+    Clear
+  </button>
       <!-- <a class="menu-btn" routerLink="/add-dimensions"><i class="bi bi-rulers me-2"></i> Add Dimensions</a>
       <a class="menu-btn" routerLink="/view-reports"><i class="bi bi-graph-up-arrow me-2"></i> View Reports</a> -->
     </div>
@@ -357,10 +394,59 @@ tbody tr:hover {
           <input [(ngModel)]="searchText" placeholder="Enter Part Name or Drawing No">
         </div>
         <button class="search-btn" (click)="searchProduct()">Search</button>
+
+        <button class="search-btn" style="margin-left:10px; background:#F5C518; color:#0A2342;"
+          (click)="clearSearch()">
+    Clear
+  </button>
       </div>
 
       <div *ngIf="errorMsg" style="color:#d40000; margin-top:6px;">{{ errorMsg }}</div>
     </div>
+
+
+    <!-- RECENT PRODUCTS TABLE -->
+<div *ngIf="!productFound && recentProducts.length" class="product-card">
+
+  <h4 style="margin-bottom:10px;">Recent Products</h4>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Sr</th>
+        <th>Part Name</th>
+        <th>Drawing No</th>
+        <th>Customer</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let p of recentProducts; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ p.partName }}</td>
+        <td>{{ p.drawingNo }}</td>
+        <td>{{ p.customer }}</td>
+
+          <td>
+            <!-- VIEW BUTTON (for everyone) -->
+            <button class="action-btn btn-blue"
+                    (click)="searchText = p.drawingNo; searchProduct()">View</button>
+
+            <!-- DELETE BUTTON (only if logged in as ADMIN) -->
+            <button *ngIf="auth.getRole()?.toUpperCase() === 'ADMIN'"
+                    class="action-btn btn-blue"
+                    style="margin-left:6px;"
+                    (click)="deleteProduct(p.id)">
+              Delete
+            </button>
+                  </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
 
     <!-- PRODUCT RESULT -->
     <div *ngIf="productFound" class="product-card">

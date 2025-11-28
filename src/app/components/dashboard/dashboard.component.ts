@@ -12,7 +12,10 @@ export class DashboardComponent {
   searchText = '';
   productFound: any = null;
   errorMsg = '';
-recentProducts: any;
+  recentProducts: any[] = [];
+
+
+
 
   constructor(
     public auth: AuthService,
@@ -23,12 +26,35 @@ recentProducts: any;
     if (!this.auth.isLoggedIn()) {
       this.router.navigate(['/login']);
     }
+
+    this.loadRecentProducts();    // ⬅ Add this line
+  }
+
+  clearSearch() {
+    this.searchText = '';
+    this.productFound = null;
+    this.errorMsg = '';
+
+    // Reload recent products
+    this.loadRecentProducts();
   }
 
   logout() {
     this.auth.logout();
     this.router.navigate(['/login']);
   }
+  loadRecentProducts() {
+    this.productService.getAllProducts().subscribe({
+      next: res => {
+        // take last 6 entries and reverse them so latest comes first
+        this.recentProducts = res.slice(-6).reverse();
+      },
+      error: err => console.error('Error loading products', err)
+    });
+  }
+
+
+
 
   searchProduct() {
     this.errorMsg = '';
@@ -47,6 +73,21 @@ recentProducts: any;
       }
     });
   }
+
+  deleteProduct(id: number) {
+    if (!confirm("Are you sure you want to delete this record?")) return;
+
+    this.productService.deleteProduct(id).subscribe({
+      next: () => {
+        alert("Product deleted successfully!");
+        this.loadRecentProducts(); // refresh table
+      },
+      error: () => {
+        alert("Failed to delete product.");
+      }
+    });
+  }
+
 
   downloadPdf() {
     if (!this.productFound) return;
@@ -108,3 +149,5 @@ recentProducts: any;
     window.URL.revokeObjectURL(url);
   }
 }
+
+

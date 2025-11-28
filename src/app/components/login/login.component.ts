@@ -7,6 +7,16 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
+  goToSignup() {
+    this.router.navigate(['/signup']);
+  }
+
+
+
+signup() {
+throw new Error('Method not implemented.');
+}
+
   username = '';
   password = '';
   message = '';
@@ -20,8 +30,9 @@ export class LoginComponent {
   }
 
   forgotPassword() {
-    alert("Please contact admin to reset your password.");
+    this.router.navigate(['/forgot-password']);
   }
+
 
 
   login() {
