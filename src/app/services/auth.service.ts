@@ -17,15 +17,15 @@ export class AuthService {
   }
 
   sendOtp(email: string) {
-    return this.http.post<any>('http://localhost:8080/api/users/forgot-password/send-otp', { email });
+    return this.http.post<any>('https://app-5431ca0d-ad85-45fb-86e3-1018062b316c.cleverapps.io/api/users/forgot-password/send-otp', { email });
   }
 
   verifyOtp(email: string, otp: string) {
-    return this.http.post<any>('http://localhost:8080/api/users/forgot-password/verify-otp', { email, otp });
+    return this.http.post<any>('https://app-5431ca0d-ad85-45fb-86e3-1018062b316c.cleverapps.io/api/users/forgot-password/verify-otp', { email, otp });
   }
 
   resetPassword(email: string, newPassword: string) {
-    return this.http.post<any>('http://localhost:8080/api/users/forgot-password/reset', { email, newPassword });
+    return this.http.post<any>('https://app-5431ca0d-ad85-45fb-86e3-1018062b316c.cleverapps.io/api/users/forgot-password/reset', { email, newPassword });
   }
 
 

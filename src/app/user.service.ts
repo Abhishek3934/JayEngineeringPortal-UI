@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
 export class UserService {
 
   // Backend endpoint
-    // private baseUrl = 'https://app-5431ca0d-ad85-45fb-86e3-1018062b316c.cleverapps.io/api/users'; // your backend endpoint
+    private baseUrl = 'https://app-5431ca0d-ad85-45fb-86e3-1018062b316c.cleverapps.io/api/users'; // your backend endpoint
 
-  private baseUrl = 'http://localhost:8080/api/users';
+  // private baseUrl = 'http://localhost:8080/api/users';
   // Or from environment
   // private baseUrl = environment.apiUrl;
 
